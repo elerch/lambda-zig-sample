@@ -1,0 +1,10 @@
+.{
+    .name = "lambda-zig",
+    .version = "0.1.0",
+    .dependencies = .{
+        .@"lambda-zig" = .{
+            .url = "https://git.lerch.org/lobo/lambda-zig/archive/fa13a08c4d91034a9b19d85f8c4c0af4cedaa67e.tar.gz",
+            .hash = "122037c357f834ffddf7b3a514f55edd5a4d7a3cde138a4021b6ac51be8fd2926000",
+        },
+    },
+}
