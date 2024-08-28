@@ -26,6 +26,12 @@ pub fn build(b: *std.Build) !void {
 
     try @import("lambda-zig").lambdaBuildOptions(b, exe);
 
+    const aws_lambda_dep = b.dependency("lambda-zig", .{
+        .target = target,
+        .optimize = optimize,
+    });
+    const aws_lambda_module = aws_lambda_dep.module("lambda_runtime");
+    exe.root_module.addImport("aws_lambda_runtime", aws_lambda_module);
     // This declares intent for the executable to be installed into the
     // standard location when the user invokes the "install" step (the default
     // step when running `zig build`).

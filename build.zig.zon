@@ -3,8 +3,8 @@
     .version = "0.1.0",
     .dependencies = .{
         .@"lambda-zig" = .{
-            .url = "https://git.lerch.org/lobo/lambda-zig/archive/ef5b793882c60ff3d9f3e088fc47758e8ec5a2bc.tar.gz",
-            .hash = "122053d827cde4634ab521ee87cc1195abbbdbd9b5ccc66e557764a151f88c138d02",
+            .url = "https://git.lerch.org/lobo/lambda-zig/archive/91149957b58fab30407ffd97abbd3073ad92b39c.tar.gz",
+            .hash = "1220e05a0f97c8a7bcdf426a2228b210937b0105125af179dfbf0243ede75b7da1b2",
         },
     },
     .paths = .{
