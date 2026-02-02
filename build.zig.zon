@@ -1,10 +1,12 @@
 .{
-    .name = "lambda-zig",
+    .name = .lambda_zig_sample,
     .version = "0.1.0",
+    .fingerprint = 0xa392d2e0f8d28528,
+    .minimum_zig_version = "0.15.2",
     .dependencies = .{
-        .@"lambda-zig" = .{
-            .url = "https://git.lerch.org/lobo/lambda-zig/archive/91149957b58fab30407ffd97abbd3073ad92b39c.tar.gz",
-            .hash = "1220e05a0f97c8a7bcdf426a2228b210937b0105125af179dfbf0243ede75b7da1b2",
+        .lambda_zig = .{
+            .url = "git+https://git.lerch.org/lobo/lambda-zig/#183d2d912c41ca721c8d18e5c258e4472d38db70",
+            .hash = "lambda_zig-0.1.0-_G43_6YQAQD-ahqtf3DQpJroP__spvt4U_uI5TtMZ4Xv",
         },
     },
     .paths = .{

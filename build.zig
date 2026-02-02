@@ -1,4 +1,5 @@
 const std = @import("std");
+const lambda_zig = @import("lambda_zig");
 
 // Although this function looks imperative, note that its job is to
 // declaratively construct a build graph that will be executed by an external
@@ -15,31 +16,32 @@ pub fn build(b: *std.Build) !void {
     // set a preferred release mode, allowing the user to decide how to optimize.
     const optimize = b.standardOptimizeOption(.{});
 
-    const exe = b.addExecutable(.{
-        .name = "lambda-zig-sample",
-        // In this case the main source file is merely a path, however, in more
-        // complicated build scripts, this could be a generated file.
+    const exe_module = b.createModule(.{
         .root_source_file = b.path("src/main.zig"),
         .target = target,
         .optimize = optimize,
     });
 
-    try @import("lambda-zig").lambdaBuildOptions(b, exe);
+    const exe = b.addExecutable(.{
+        .name = "lambda-zig-sample",
+        .root_module = exe_module,
+    });
 
-    const aws_lambda_dep = b.dependency("lambda-zig", .{
+    // Get lambda-zig dependency
+    const lambda_zig_dep = b.dependency("lambda_zig", .{
         .target = target,
         .optimize = optimize,
     });
-    const aws_lambda_module = aws_lambda_dep.module("lambda_runtime");
-    exe.root_module.addImport("aws_lambda_runtime", aws_lambda_module);
-    // This declares intent for the executable to be installed into the
-    // standard location when the user invokes the "install" step (the default
-    // step when running `zig build`).
+
+    // Add lambda runtime dependency to the module
+    exe_module.addImport("aws_lambda_runtime", lambda_zig_dep.module("lambda_runtime"));
+
     b.installArtifact(exe);
 
-    // This *creates* a Run step in the build graph, to be executed when another
-    // step is evaluated that depends on it. The next line below will establish
-    // such a dependency.
+    // Add Lambda build steps (package, deploy, invoke, etc.)
+    try lambda_zig.configureBuild(b, lambda_zig_dep, exe);
+
+    // Run step
     const run_cmd = b.addRunArtifact(exe);
 
     // By making the run step depend on the install step, it will be run from the
@@ -62,10 +64,15 @@ pub fn build(b: *std.Build) !void {
 
     // Creates a step for unit testing. This only builds the test executable
     // but does not run it.
-    const unit_tests = b.addTest(.{
+    const test_module = b.createModule(.{
         .root_source_file = b.path("src/main.zig"),
         .target = target,
         .optimize = optimize,
+    });
+    test_module.addImport("aws_lambda_runtime", lambda_zig_dep.module("lambda_runtime"));
+
+    const unit_tests = b.addTest(.{
+        .root_module = test_module,
     });
 
     const run_unit_tests = b.addRunArtifact(unit_tests);
