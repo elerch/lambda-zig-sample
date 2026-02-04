@@ -5,8 +5,8 @@
     .minimum_zig_version = "0.15.2",
     .dependencies = .{
         .lambda_zig = .{
-            .url = "git+https://git.lerch.org/lobo/lambda-zig/#183d2d912c41ca721c8d18e5c258e4472d38db70",
-            .hash = "lambda_zig-0.1.0-_G43_6YQAQD-ahqtf3DQpJroP__spvt4U_uI5TtMZ4Xv",
+            .url = "git+https://git.lerch.org/lobo/lambda-zig#5c36a2c979b0bd4f0cbda3d64fb997f341085bc9",
+            .hash = "lambda_zig-0.1.0-_G43_2ReAQDdEirp5hBDtuKAtAPzWjleCp9nw524BCdZ",
         },
     },
     .paths = .{

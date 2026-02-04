@@ -39,7 +39,7 @@ pub fn build(b: *std.Build) !void {
     b.installArtifact(exe);
 
     // Add Lambda build steps (package, deploy, invoke, etc.)
-    try lambda_zig.configureBuild(b, lambda_zig_dep, exe);
+    _ = try lambda_zig.configureBuild(b, lambda_zig_dep, exe, .{});
 
     // Run step
     const run_cmd = b.addRunArtifact(exe);
